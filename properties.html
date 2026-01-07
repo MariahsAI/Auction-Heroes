@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Properties | Auction Heroes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #08090a;
+            --rich-black: #0d0e10;
+            --charcoal: #151618;
+            --dark-gray: #1e2023;
+            --medium-gray: #3a3d42;
+            --soft-gray: #7a7d82;
+            --gold: #d4a853;
+            --gold-bright: #e8c068;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--black);
+            color: var(--white);
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(8, 9, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(212, 168, 83, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            text-decoration: none;
+        }
+
+        .logo-mark {
+            width: 42px;
+            height: 42px;
+            border: 1.5px solid var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gold);
+        }
+
+        .logo-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--white);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--soft-gray);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--gold);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn-outline {
+            padding: 12px 24px;
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .btn-outline:hover {
+            background: var(--gold);
+            color: var(--black);
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 60px 5%;
+            border-bottom: 1px solid var(--dark-gray);
+        }
+
+        .page-header-content {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            color: var(--soft-gray);
+            font-size: 1.1rem;
+            max-width: 600px;
+        }
+
+        /* Filters */
+        .filters-section {
+            padding: 30px 5%;
+            background: var(--rich-black);
+            border-bottom: 1px solid var(--dark-gray);
+            position: sticky;
+            top: 74px;
+            z-index: 50;
+        }
+
+        .filters-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .filter-group label {
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--soft-gray);
+        }
+
+        .filter-group select,
+        .filter-group input {
+            padding: 12px 16px;
+            background: var(--charcoal);
+            border: 1px solid var(--dark-gray);
+            color: var(--white);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            min-width: 160px;
+            transition: border-color 0.3s;
+        }
+
+        .filter-group select:focus,
+        .filter-group input:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+        .filter-group select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23d4a853' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 36px;
+            cursor: pointer;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .search-box input {
+            width: 100%;
+        }
+
+        .filter-btn {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-bright));
+            border: none;
+            color: var(--black);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s;
+            align-self: flex-end;
+        }
+
+        .filter-btn:hover {
+            box-shadow: 0 5px 20px rgba(212, 168, 83, 0.3);
+        }
+
+        .results-info {
+            color: var(--soft-gray);
+            font-size: 0.85rem;
+            margin-left: auto;
+        }
+
+        /* Properties Grid */
+        .properties-section {
+            padding: 50px 5%;
+        }
+
+        .properties-container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .property-card {
+            background: var(--charcoal);
+            border: 1px solid var(--dark-gray);
+            transition: all 0.4s;
+            cursor: pointer;
+        }
+
+        .property-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-image {
+            height: 220px;
+            position: relative;
+            overflow: hidden;
+            background: var(--dark-gray);
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .property-card:hover .card-image img {
+            transform: scale(1.05);
+        }
+
+        .card-badges {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            right: 16px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .badge {
+            padding: 8px 12px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .badge-live {
+            background: var(--gold);
+            color: var(--black);
+        }
+
+        .badge-ending {
+            background: var(--black);
+            color: var(--gold);
+            border: 1px solid var(--gold);
+        }
+
+        .badge-upcoming {
+            background: rgba(0,0,0,0.8);
+            color: var(--white);
+        }
+
+        .badge-rating {
+            background: rgba(0,0,0,0.8);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .badge-rating .star {
+            color: var(--gold);
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-location {
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 8px;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            color: var(--white);
+            margin-bottom: 0.75rem;
+        }
+
+        .card-specs {
+            display: flex;
+            gap: 1.25rem;
+            color: var(--soft-gray);
+            font-size: 0.85rem;
+            margin-bottom: 1.25rem;
+            padding-bottom: 1.25rem;
+            border-bottom: 1px solid var(--dark-gray);
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .card-price-label {
+            font-size: 0.6rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--soft-gray);
+            margin-bottom: 4px;
+        }
+
+        .card-price {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            color: var(--white);
+        }
+
+        .card-btn {
+            padding: 10px 20px;
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .card-btn:hover {
+            background: var(--gold);
+            color: var(--black);
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 50px;
+        }
+
+        .pagination button {
+            width: 44px;
+            height: 44px;
+            background: var(--charcoal);
+            border: 1px solid var(--dark-gray);
+            color: var(--soft-gray);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .pagination button:hover,
+        .pagination button.active {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .pagination button.active {
+            background: var(--gold);
+            color: var(--black);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .properties-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .nav-links {
+                display: none;
+            }
+
+            .filters-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-group {
+                width: 100%;
+            }
+
+            .filter-group select,
+            .filter-group input {
+                width: 100%;
+            }
+
+            .results-info {
+                margin-left: 0;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .properties-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <div class="logo-mark">AH</div>
+            <div class="logo-text">Auction Heroes</div>
+        </a>
+        <ul class="nav-links">
+            <li><a href="properties.html" class="active">Properties</a></li>
+            <li><a href="live-auction.html">Live Auctions</a></li>
+            <li><a href="index.html#how">How It Works</a></li>
+            <li><a href="index.html#services">Services</a></li>
+        </ul>
+        <div class="nav-buttons">
+            <a href="login.html" class="btn-outline">Sign In</a>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="page-header-content">
+            <h1>Property Database</h1>
+            <p>Browse our complete collection of luxury vacation properties available for auction worldwide.</p>
+        </div>
+    </header>
+
+    <section class="filters-section">
+        <div class="filters-container">
+            <div class="filter-group search-box">
+                <label>Search</label>
+                <input type="text" placeholder="Search properties, locations...">
+            </div>
+            <div class="filter-group">
+                <label>Location</label>
+                <select>
+                    <option>All Locations</option>
+                    <option>Caribbean</option>
+                    <option>Greece</option>
+                    <option>Spain</option>
+                    <option>Italy</option>
+                    <option>Portugal</option>
+                    <option>Croatia</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Price Range</label>
+                <select>
+                    <option>Any Price</option>
+                    <option>$100K - $200K</option>
+                    <option>$200K - $350K</option>
+                    <option>$350K - $500K</option>
+                    <option>$500K+</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Status</label>
+                <select>
+                    <option>All Status</option>
+                    <option>Live Now</option>
+                    <option>Ending Soon</option>
+                    <option>Upcoming</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Rating</label>
+                <select>
+                    <option>Any Rating</option>
+                    <option>★★★★★ (5)</option>
+                    <option>★★★★☆ (4+)</option>
+                    <option>★★★☆☆ (3+)</option>
+                </select>
+            </div>
+            <button class="filter-btn">Apply Filters</button>
+            <span class="results-info">Showing 24 of 127 properties</span>
+        </div>
+    </section>
+
+    <section class="properties-section">
+        <div class="properties-container">
+            <div class="properties-grid">
+                <!-- Property Cards -->
+                <div class="property-card" onclick="window.location='bid.html'">
+                    <div class="card-image">
+                        <img src="property-barbados.avif" alt="Coral Bay Beachfront Villa">
+                        <div class="card-badges">
+                            <span class="badge badge-live">● Live</span>
+                            <span class="badge badge-rating"><span class="star">★</span> 5/5</span>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-location">Barbados, Caribbean</div>
+                        <h3 class="card-title">Coral Bay Beachfront Villa</h3>
+                        <div class="card-specs">
+                            <span>4 Beds</span>
+                            <span>3 Baths</span>
+                            <span>2,400 sq ft</span>
+                        </div>
+                        <div class="card-footer">
+                            <div>
+                                <div class="card-price-label">Current Bid</div>
+                                <div class="card-price">$198,500</div>
+                            </div>
+                            <button class="card-btn">Bid Now</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="property-card" onclick="window.location='bid.html'">
+                    <div class="card-image">
+                        <img src="property-greece.jpg" alt="Cliffside Caldera Suite">
+                        <div class="card-badges">
+                            <span class="badge badge-ending">Ending Soon</span>
+                            <span class="badge badge-rating"><span class="star">★</span> 4/5</span>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-location">Santorini, Greece</div>
+                        <h3 class="card-title">Cliffside Caldera Suite</h3>
+                        <div class="card-specs">
+                            <span>2 Beds</span>
+                            <span>2 Baths</span>
+                            <span>1,200 sq ft</span>
+                        </div>
+                        <div class="card-footer">
+                            <div>
+                                <div class="card-price-label">Current Bid</div>
+                                <div class="card-price">$165,000</div>
+                            </div>
+                            <button class="card-btn">Bid Now</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="property-card" onclick="window.location='bid.html'">
+                    <div class="card-image">
+                        <img src="property-spain.webp" alt="Mediterranean Penthouse">
+                        <div class="card-badges">
+                            <span class="badge badge-upcoming">Tomorrow</span>
+                            <span class="badge badge-rating"><span class="star">★</span> 5/5</span>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-location">Mallorca, Spain</div>
+                        <h3 class="card-title">Mediterranean Penthouse</h3>
+                        <div class="card-specs">
+                            <span>3 Beds</span>
+                            <span>2 Baths</span>
+                            <span>1,800 sq ft</span>
+                        </div>
+                        <div class="card-footer">
+                            <div>
+                                <div class="card-price-label">Starting Bid</div>
+                                <div class="card-price">$145,000</div>
+                            </div>
+                            <button class="card-btn">Notify Me</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="property-card" onclick="window.location='bid.html'">
+                    <div class="card-image">
+                        <img src="property-italy.jpg" alt="Hillside Lemon Grove Villa">
+                        <div class="card-badges">
+                            <span class="badge badge-live">● Live</span>
+                            <span class="badge badge-rating"><span class="star">★</span> 4/5</span>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-location">Amalfi Coast, Italy</div>
+                        <h3 class="card-title">Hillside Lemon Grove Villa</h3>
+                        <div class="card-specs">
+                            <span>3 Beds</span>
+                            <span>2 Baths</span>
+                            <span>1,650 sq ft</span>
+                        </div>
+                        <div class="card-footer">
+                            <div>
+                                <div class="card-price-label">Current Bid</div>
+                                <div class="card-price">$225,000</div>
+                            </div>
+                            <button class="card-btn">Bid Now</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="property-card" onclick="window.location='bid.html'">
+                    <div class="card-image">
+                        <img src="property-portugal.jpg" alt="Oceanfront Surf Retreat">
+                        <div class="card-badges">
+                            <span class="badge badge-upcoming">In 3 Days</span>
+                            <span class="badge badge-rating"><span class="star">★</span> 5/5</span>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-location">Algarve, Portugal</div>
+                        <h3 class="card-title">Oceanfront Surf Retreat</h3>
+                        <div class="card-specs">
+                            <span>4 Beds</span>
+                            <span>3 Baths</span>
+                            <span>2,100 sq ft</span>
+                        </div>
+                        <div class="card-footer">
+                            <div>
+                                <div class="card-price-label">Starting Bid</div>
+                                <div class="card-price">$189,000</div>
+                            </div>
+                            <button class="card-btn">Notify Me</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="property-card" onclick="window.location='bid.html'">
+                    <div class="card-image">
+                        <img src="property-croatia.webp" alt="Old Town Harbor Penthouse">
+                        <div class="card-badges">
+                            <span class="badge badge-ending">45 Min Left</span>
+                            <span class="badge badge-rating"><span class="star">★</span> 4/5</span>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-location">Dubrovnik, Croatia</div>
+                        <h3 class="card-title">Old Town Harbor Penthouse</h3>
+                        <div class="card-specs">
+                            <span>2 Beds</span>
+                            <span>2 Baths</span>
+                            <span>1,400 sq ft</span>
+                        </div>
+                        <div class="card-footer">
+                            <div>
+                                <div class="card-price-label">Current Bid</div>
+                                <div class="card-price">$178,500</div>
+                            </div>
+                            <button class="card-btn">Bid Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pagination">
+                <button class="active">1</button>
+                <button>2</button>
+                <button>3</button>
+                <button>4</button>
+                <button>→</button>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
